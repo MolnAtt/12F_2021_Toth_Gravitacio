@@ -22,6 +22,7 @@ namespace _12F_2021_Toth_Gravitacio
         Label mcimke;
         Label helycimke;
         Label vcimke;
+        public Brush toll;
         
 
 
@@ -42,6 +43,7 @@ namespace _12F_2021_Toth_Gravitacio
             this.nevcimke.AutoSize = true;
             panel.Controls.Add(nevcimke);
 
+            toll = new SolidBrush(szin);
 
             this.mcimke = new Label();
             mcimke.Text = $"{this.m} Mt";
@@ -60,13 +62,44 @@ namespace _12F_2021_Toth_Gravitacio
 
             Bolygo.lista.Add(this);
 
-            Rajzoldle();
 
         }
 
-        void Rajzoldle()
-        { 
+        public static void Összes_léptetése()
+        {
+            foreach (Bolygo bolygo in Bolygo.lista)
+            {
+                bolygo.Léptet();
+            }
+        }
 
+        private void Léptet()
+        {
+            hely += v;
+        }
+
+        public static void Rajzold_le_mind_ide(PictureBox palya)
+        {
+            Bitmap kep = new Bitmap(palya.Width, palya.Height);
+            Graphics rajzolókészlet = Graphics.FromImage(kep);
+
+            foreach (Bolygo bolygo in Bolygo.lista)
+            {
+                bolygo.Rajzoldle(rajzolókészlet);
+            }
+            
+            palya.Image = kep;
+            palya.Refresh();
+        }
+
+        void Rajzoldle(Graphics rajzolókészlet)
+        {
+            double r = Math.Sqrt(m/10);
+            int xp = (int)Math.Round(hely.X - r);
+            int yp = (int)Math.Round(hely.Y - r);
+            int R = (int)Math.Round(r);
+
+            rajzolókészlet.FillEllipse(this.toll, new Rectangle(xp,yp,2*R, 2*R));
         }
 
 

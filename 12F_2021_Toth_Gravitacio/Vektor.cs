@@ -17,5 +17,15 @@ namespace _12F_2021_Toth_Gravitacio
             this.Y = y;
         }
 
+        public static Vektor operator +(Vektor a, Vektor b) => new Vektor(a.X + b.X, a.Y + b.Y);
+        public static Vektor operator -(Vektor a, Vektor b) => new Vektor(a.X - b.X, a.Y - b.Y);
+        public static double operator *(Vektor a, Vektor b) => a.X*b.X+a.Y*b.Y;
+        public static Vektor operator *(double lambda, Vektor b) => new Vektor(lambda*b.X, lambda * b.Y);
+        public static Vektor operator *(Vektor b, double lambda) => lambda * b;
+        public double Hossz() => Math.Sqrt(HosszNégyzet());
+        public double HosszNégyzet() => X*X+Y*Y;
+
+
+
     }
 }

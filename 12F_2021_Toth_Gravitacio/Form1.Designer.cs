@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.start = new System.Windows.Forms.Button();
             this.palya = new System.Windows.Forms.PictureBox();
             this.inic = new System.Windows.Forms.Button();
             this.tomeginput = new System.Windows.Forms.NumericUpDown();
             this.tomegcimke = new System.Windows.Forms.Label();
             this.monitorpanel = new System.Windows.Forms.Panel();
+            this.metronom = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.palya)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tomeginput)).BeginInit();
             this.SuspendLayout();
@@ -91,6 +93,10 @@
             this.monitorpanel.Size = new System.Drawing.Size(126, 466);
             this.monitorpanel.TabIndex = 5;
             // 
+            // metronom
+            // 
+            this.metronom.Tick += new System.EventHandler(this.metronom_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -119,6 +125,7 @@
         private System.Windows.Forms.NumericUpDown tomeginput;
         private System.Windows.Forms.Label tomegcimke;
         private System.Windows.Forms.Panel monitorpanel;
+        private System.Windows.Forms.Timer metronom;
     }
 }
 
