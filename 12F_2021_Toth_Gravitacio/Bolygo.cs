@@ -23,9 +23,24 @@ namespace _12F_2021_Toth_Gravitacio
         Label helycimke;
         Label vcimke;
         public Brush toll;
-        
 
+        const double G = 1;
 
+        public static void GravitációsKölcsönhatás(Bolygo a, Bolygo b)
+        {
+            // Igazából nem ezzel kéne dolgozni, mert a két bolygóra két különböző erő hat.
+            double tav = a.hely.távolságnégyzete(b.hely);
+            double Fa = G * b.m / tav;
+            double Fb = G * a.m / tav;
+
+            // ez most egy skalármennyiség, tehát ebből iránnyal bíró vektor kell.
+            // az irány a másik bolygó fele mutat, venni kell az oda mutató vektort, 
+            // el kell osztani a hosszával, és ezt kell megszorozni az F erővel
+
+            // a.v += Fa;
+            // b.v += Fb;
+
+        }
         public Bolygo(string nev, Color szin, double m, Vektor hely, Vektor v, Panel panel)
         {
             this.nev = nev;
@@ -46,36 +61,42 @@ namespace _12F_2021_Toth_Gravitacio
             toll = new SolidBrush(szin);
 
             this.mcimke = new Label();
-            mcimke.Text = $"{this.m} Mt";
             this.mcimke.Location = new Point(80,10 + letolas);
             panel.Controls.Add(mcimke);
 
             this.helycimke = new Label();
-            helycimke.Text = $"hely = ({hely.X};{hely.Y})";
             this.helycimke.Location = new Point(10,35 + letolas);
             panel.Controls.Add(helycimke);
 
             this.vcimke = new Label();
-            vcimke.Text = $"v = ({v.X};{v.Y})";
             this.vcimke.Location = new Point(10,60 + letolas);
             panel.Controls.Add(vcimke);
 
+            MonitorFrissít();
             Bolygo.lista.Add(this);
 
+           
 
+        }
+
+        internal static void OsszesMonitor()
+        {
+            foreach (Bolygo bolygo in Bolygo.lista)
+                bolygo.MonitorFrissít();
         }
 
         public static void Összes_léptetése()
         {
             foreach (Bolygo bolygo in Bolygo.lista)
-            {
                 bolygo.Léptet();
-            }
         }
 
-        private void Léptet()
+        private void Léptet() => hely += v;
+        private void MonitorFrissít()
         {
-            hely += v;
+            helycimke.Text = $"hely = ({hely.X};{hely.Y})";
+            vcimke.Text = $"v = ({v.X};{v.Y})";
+            mcimke.Text = $"{m} Mt";
         }
 
         public static void Rajzold_le_mind_ide(PictureBox palya)

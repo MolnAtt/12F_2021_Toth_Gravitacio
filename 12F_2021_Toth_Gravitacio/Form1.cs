@@ -20,9 +20,22 @@ namespace _12F_2021_Toth_Gravitacio
             
         }
 
+        bool fut = false;
         private void start_Click(object sender, EventArgs e)
         {
-            metronom.Start();
+            if (fut)
+            {
+                metronom.Stop();
+                start.Text="START";
+                
+            }
+            else
+            {
+                metronom.Start();
+                start.Text="STOP";
+                Bolygo.OsszesMonitor();
+            }            
+            fut = !fut;
         }
 
         private void palya_Click(object sender, EventArgs e)
