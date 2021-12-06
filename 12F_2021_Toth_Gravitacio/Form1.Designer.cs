@@ -59,6 +59,8 @@
             this.palya.TabIndex = 1;
             this.palya.TabStop = false;
             this.palya.Click += new System.EventHandler(this.palya_Click);
+            this.palya.MouseDown += new System.Windows.Forms.MouseEventHandler(this.palya_MouseDown);
+            this.palya.MouseUp += new System.Windows.Forms.MouseEventHandler(this.palya_MouseUp);
             // 
             // inic
             // 
@@ -68,13 +70,35 @@
             this.inic.TabIndex = 2;
             this.inic.Text = "Törlés";
             this.inic.UseVisualStyleBackColor = true;
+            this.inic.Click += new System.EventHandler(this.inic_Click);
             // 
             // tomeginput
             // 
+            this.tomeginput.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             this.tomeginput.Location = new System.Drawing.Point(1400, 146);
+            this.tomeginput.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.tomeginput.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             this.tomeginput.Name = "tomeginput";
             this.tomeginput.Size = new System.Drawing.Size(51, 20);
             this.tomeginput.TabIndex = 3;
+            this.tomeginput.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.tomeginput.ValueChanged += new System.EventHandler(this.tomeginput_ValueChanged);
             // 
             // tomegcimke
             // 
@@ -95,6 +119,7 @@
             // 
             // metronom
             // 
+            this.metronom.Interval = 10;
             this.metronom.Tick += new System.EventHandler(this.metronom_Tick);
             // 
             // Form1

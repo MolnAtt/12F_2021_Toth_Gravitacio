@@ -13,7 +13,7 @@ namespace _12F_2021_Toth_Gravitacio
     {
         static List<Bolygo> lista = new List<Bolygo>();
         public string nev;
-        public Color szin;
+        //public Color szin;
         public double m;
         public Vektor hely;
         public Vektor v; // speed=sebesség velocity=sebességvektor, egy időegység alatt hova mozdul el
@@ -26,25 +26,11 @@ namespace _12F_2021_Toth_Gravitacio
 
         const double G = 1;
 
-        public static void GravitációsKölcsönhatás(Bolygo a, Bolygo b)
-        {
-            // Igazából nem ezzel kéne dolgozni, mert a két bolygóra két különböző erő hat.
-            double tav = a.hely.távolságnégyzete(b.hely);
-            double Fa = G * b.m / tav;
-            double Fb = G * a.m / tav;
-
-            // ez most egy skalármennyiség, tehát ebből iránnyal bíró vektor kell.
-            // az irány a másik bolygó fele mutat, venni kell az oda mutató vektort, 
-            // el kell osztani a hosszával, és ezt kell megszorozni az F erővel
-
-            // a.v += Fa;
-            // b.v += Fb;
-
-        }
+        
         public Bolygo(string nev, Color szin, double m, Vektor hely, Vektor v, Panel panel)
         {
             this.nev = nev;
-            this.szin = szin;
+            //this.szin = szin;
             this.m = m;
             this.hely = hely;
             this.v = v;
@@ -78,7 +64,44 @@ namespace _12F_2021_Toth_Gravitacio
            
 
         }
+        public static void GravitációsKölcsönhatás(Bolygo a, Bolygo b)
+        {
+            double tavnegyzet = a.hely.távolságnégyzete(b.hely);
+            double alambda = G * b.m / tavnegyzet; // ezt a Wikipédiáról lestük le, elhittük Newtonnak.
+            double blambda = G * a.m / tavnegyzet;
 
+            Vektor b_irányvektor = a.hely - b.hely;
+            Vektor a_irányvektor = -1*b_irányvektor;
+
+            double tav = Math.Sqrt(tavnegyzet);
+            Vektor b_egységvektor = b_irányvektor / tav;
+            Vektor a_egységvektor = -1 * b_egységvektor;
+
+            Vektor Fb = b_egységvektor * blambda;
+            Vektor Fa = a_egységvektor * alambda;
+
+            a.v += Fa;
+            b.v += Fb;
+        }
+
+        internal static void Összes_törlése()
+        {
+
+        }
+
+        public static void Utolsó_bolygó_sebességének_megadása(Point p)
+        {
+            Vektor hova = new Vektor(p);
+            Bolygo b = Bolygo.lista.Last();
+            b.v = (hova - b.hely)/100;
+        }
+
+        public static void Gravitáció_alkalmazása()
+        {
+            for (int honnan = 0; honnan < Bolygo.lista.Count-1; honnan++)
+                for (int hova = honnan+1; hova < Bolygo.lista.Count; hova++)
+                    GravitációsKölcsönhatás(Bolygo.lista[honnan], Bolygo.lista[hova]);
+        }
         internal static void OsszesMonitor()
         {
             foreach (Bolygo bolygo in Bolygo.lista)
@@ -105,9 +128,7 @@ namespace _12F_2021_Toth_Gravitacio
             Graphics rajzolókészlet = Graphics.FromImage(kep);
 
             foreach (Bolygo bolygo in Bolygo.lista)
-            {
                 bolygo.Rajzoldle(rajzolókészlet);
-            }
             
             palya.Image = kep;
             palya.Refresh();

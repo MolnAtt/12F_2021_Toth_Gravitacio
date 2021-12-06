@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace _12F_2021_Toth_Gravitacio
 {
     class Vektor
     {
-        public double X;
-        public double Y;
+        public double X { get; set; }
+        public double Y { get; set; }
 
-        public Vektor(double x, double y)
-        {
-            this.X = x;
-            this.Y = y;
-        }
+        public Vektor(double x, double y) => (X, Y) = (x, y);
+        public Vektor(Point P) => (X,Y) = ((double)P.X, (double)P.Y);
 
         public static Vektor operator +(Vektor a, Vektor b) => new Vektor(a.X + b.X, a.Y + b.Y);
         public static Vektor operator -(Vektor a, Vektor b) => new Vektor(a.X - b.X, a.Y - b.Y);
